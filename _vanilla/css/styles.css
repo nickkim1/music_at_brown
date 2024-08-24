@@ -1,0 +1,484 @@
+/* Scrolling genre animation */
+/* 'more' toggle on descriptions */
+/* Routing of 'readmore' to single artists page */
+/* Syncing jobs and artists pages together */
+/* Single artists page */
+/* Edit artists page */
+
+/* Set up a basic backend database to read/write/fetch shit from */
+
+/***********************************************************************/
+/* Some of following code was taken directly from Brad Traversy React code */
+/* https://github.com/bradtraversy/react-crash-2024 */
+
+code,
+kbd,
+samp,
+pre {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  /* 1 */
+  font-feature-settings: normal;
+  /* 2 */
+  font-variation-settings: normal;
+  /* 3 */
+  font-size: 1em;
+  /* 4 */
+}
+
+/* taken from w3 schools, want to scroll on artist profile */
+/* Hide scrollbar for Chrome, Safari and Opera */
+.example::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.example {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/***********************************************************************/
+/* NavBar */
+* {
+    font-family: Poppins, sans-serif;
+}
+
+
+/* Remove default margins to allow full-sizing to border box */
+body {
+    margin: 0;
+}
+
+/* Remove default heading margins to make better */
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+}
+
+/* Remove default styles for 'a's */
+a {
+    text-decoration: none;
+    color: white;
+}
+
+.navbar {
+    font-weight: bold;
+    background-color: darkblue;
+    min-height: 6rem;
+    color: rgb(255, 255, 255);
+    border-bottom: 1px solid black;
+}
+
+.navbar-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.logo-sidebar {
+    font-size: 1.5em;
+    flex-shrink: 0;  
+    margin-top: 2.25rem;
+    margin-left: 5rem;
+}
+
+.navbar-sidebar {
+    display: flex;
+    margin-top: 2.25rem;
+    margin-right: 5rem;
+    gap: 3em;
+}
+
+.navbar-option {
+    margin: auto;
+    font-size: 1.1em;
+    /* Make the buttons a bit bigger for hover */
+    padding: 5px;
+}
+
+/* Inside a flex container, because wrapped in a line break the divs are pushed apart in the nav section */
+.navbar-sidebar-home:hover, .navbar-sidebar-artists:hover, .navbar-sidebar-addartists:hover {
+    background-color: white;
+    color: black;
+    border-radius: 5px;
+}
+
+
+/***********************************************************************/
+/* Hero section */
+.hero {
+    margin: auto;
+    background-color: rgb(56, 56, 244);
+    color: white;
+    padding: 40px 0px 40px 0px;
+    width: 100%; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hero-banner {
+    text-align: center;
+}
+
+.hero-banner h1 {
+    font-size: 2rem;
+}
+
+/***********************************************************************/
+/* Developer section */
+.users-artists {
+    display: grid;
+    margin-top: 20px;
+    /* Evenly space the cols */
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 20px;
+}
+
+.users-artists .users, .users-artists .artists {
+    padding: 20px;
+    margin: auto;
+    background-color: lightblue;
+    border-radius: 10px;
+    width: 20em;
+    box-shadow: 2px 3px 2px gray;
+}
+
+.users-artists h2 {
+    font-size: 1.25em;
+}
+
+.dash-button {
+    display: inline-block;
+    padding: 10px;
+    text-align: center;
+    background: black;
+    border-radius: 8px;
+    color: white;
+}
+
+.dash-button:hover {
+    background-color: white;
+    color: black;
+}
+
+/***********************************************************************/
+/* Browsing */
+.browser {
+    /* padding: 30px; */
+    padding: 40px;
+    background-color: lightskyblue;
+}
+
+.browser-banner {
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Just have 3 jobs adjacent, viewJobs should toggle */
+.browser-artist-listings {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+[id^="artist-listing-no-"] {
+    background-color: antiquewhite;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow: 2px 3px 2px gray;
+}
+
+.artist-listing-header {
+    display: flex;
+    gap: 10px;
+}
+
+.artist-listing-img img {
+    height: auto;
+    width: auto;
+    max-width: 150px;
+    max-height: 150px;
+    border-radius: 20px;
+}
+
+.artist-listing-banner {
+    margin-top: 85px;
+    margin-right: 20px;
+}
+
+.artist-listing-banner h1 {
+    font-size: 36px;
+    color: rgb(131, 213, 131);
+}
+
+.artist-listing-handle {
+    display: flex;
+    gap: 10px;
+}
+
+.artist-listing-misc {
+    display: flex;
+    justify-content: space-between;
+}
+
+.artist-listing-loc {
+    margin-top: 20px;
+    padding: 10px;
+    color: lightcoral;
+}
+
+.artist-listing-but {
+    color: white;
+    background-color: black;
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.artist-listing-but:hover {
+    color: white;
+    background-color: orange;
+}
+
+.artist-listing-desc, .artist-listing-genres, .artist-listing-venues {
+    margin: 20px 0px 20px 0px;
+}
+
+.artist-listing-genre {
+    background-color: gray;
+    max-width: 75px;
+    text-align: center;
+    font-weight: bold; 
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.separator {
+    border: 0.5px solid gray;
+}
+
+/***********************************************************************/
+/* View all */
+.view-all {
+    text-align: center;
+    padding: 20px;
+    font-weight: bold;
+    color: white;
+}
+
+.view-all-but {
+    background-color: black;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.view-all-but:hover {
+    background-color: orange;
+}
+
+/*********************************************************************** /
+/* Artist.html */
+/* Individual artistlisting (read more) */
+.artist {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.sidebar {
+    margin: 10px;
+    background-color: antiquewhite;
+    border-radius: 10px; 
+    padding: 20px;
+    box-shadow: 2px 3px 2px gray;
+}
+
+.sidebar-about-info {
+    text-align: center;
+}
+
+.sidebar-edit-artist {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.sidebar-booking-info, .sidebar-description {
+    margin-top: 10px;
+}
+
+.sidebar-venue-packet {
+    margin-top: 10px;
+    border: 1.5px solid black;
+    box-shadow: 2px 2px 2px gray;
+    background-color: white;
+    display: grid;
+    max-width: 200px;
+    max-height: 100px;
+    grid-template-columns: 1fr 3fr;
+}
+
+.sidebar-venue-packet:hover {
+    border: 1.5px solid blue;
+}
+
+.sidebar-venue-packet-date {
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    background-color: gray;
+    padding: 20px 5px 20px 5px;
+}
+
+.sidebar-venue-packet-description-date {
+    display: flex;
+    gap: 5px; 
+}
+
+.sidebar-venue-packet-description {
+    color: black;
+    margin: auto;
+    text-align: center;
+}
+
+.sidebar .sidebar-edit-artist a {
+    background-color: blue;
+    margin-left: 10em;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 16px;
+    border: 2px solid black;
+    text-align: center;
+    max-width: 20em;
+    font-weight: bold;
+}
+
+.sidebar .sidebar-edit-artist button {
+    background-color: red;
+    margin-right: 10em;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 16px; 
+    color: white;
+    border: 2px solid black;
+    text-align: center;
+    max-width: 20em;
+    font-weight: bold;
+}
+
+.sidebar .sidebar-edit-artist button:hover, .sidebar .sidebar-edit-artist a:hover {
+    border: 2px solid lightsteelblue;
+}
+
+/*********************************************************************** /
+/* Artist/User Signup */
+.form-wrapper{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.form-wrapper h2, h4 {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.form-wrapper p {
+    text-align: center;
+}
+
+.form-input {
+    margin: 5px 0px 10px 0px; 
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-input label, input, textarea {
+    display: block;
+    min-width: 500px;
+}
+
+.form-input label {
+    margin-bottom: 5px;
+}
+
+.form-artist-handles-link ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.form-artist-handles-link li:nth-child(2), .form-artist-handles-link li:nth-child(3), .form-artist-handles-link li:nth-child(4) {
+    margin-top: 10px;
+}
+
+.form-input label {
+    font-weight: bold;
+}
+
+.form-separator {
+    border: 2px dotted black;
+    width: 100%;
+    margin: 10px 0px 10px 0px;
+}
+
+.artist-signup, .user-signup {
+    border: 2px solid black;
+    box-shadow: 2px 2px 2px gray;
+    border-radius: 5px;
+    background-color: lavender;
+    margin: 10px;
+}
+
+#venues {
+    width: 100%; 
+    height: 100%;
+    list-style: none;
+
+    /* Push out the bullets */
+    padding-left: 0;
+    max-height: 200px;
+    overflow: scroll;
+
+    /* Ensure smooth auto-scrolling downwards for the form focus */
+    scroll-behavior: smooth;
+}
+
+.venue-card {
+    background-color: antiquewhite;
+    border: 2px solid black;
+    margin: 10px;
+    padding: 5px;
+    border-radius: 3px;
+    box-shadow: 3px 3px 3px gray;
+    position: relative;
+}
+
+.delete-button {
+    /* relatively position to the button to the top right of the parent */
+    position: absolute;
+    top: 2px;
+    right: 3px;
+    border-radius: 50px; 
+    border: 2px solid white;
+    color: white;
+    background-color: red;
+
+    /* Prevent from floating the delete button a little w/ focus (see below), just replace some of the internal instead */
+    box-sizing: border-box;
+}
+
+.delete-button:hover {
+    border: 2px solid lightblue;
+    box-sizing: border-box;
+}
+
+#venue-submit {
+    margin-bottom: 10px;
+    display: block;
+    min-width: 500px;
+}

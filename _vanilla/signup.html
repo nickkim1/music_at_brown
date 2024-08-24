@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+            integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        /> 
+        <link rel="stylesheet" href="css/styles.css" /> 
+        <link rel="icon" type="image/png" href="/favicon.ico" /> 
+        <title>SpotiRec</title>
+    </head>
+
+    <body>
+         <nav class="navbar">
+            <div class="navbar-wrapper">
+                <!-- Logo -->
+                 <div class="logo-sidebar">
+                    <a>
+                        <img />
+                        <a href="index.html">SpotiRec</a>
+                    </a>
+                 </div>
+
+                <!-- Home, Artists, Add_Artist -->
+                <div class="navbar-sidebar">
+                    <a class="navbar-option" href="index.html">Home</a>
+                    <a class="navbar-option" href="artists.html">Artists</a>
+                    <a class="navbar-option" href="dashboard.html">Dashboard</a>
+                    <a class="navbar-option" href="login.html">Login</a>
+                    <a class="navbar-option" href="signup.html">Signup</a>
+                </div>
+            </div>
+         </nav>
+         
+         <!-- Just everything besides the nav bar -->
+         <section>
+            <div class="form-wrapper">
+                <div class="artist-signup">
+                    <form class="artist-signup-form">
+
+                        <!-- Form item -->
+                        <!-- <div> -->
+                            <!-- <label for="genres">Genres</label>
+                            <select 
+                                id="genres"
+                                name="genres"
+                                required>
+                                <option>Rock</option>
+                                <option>Rap</option>
+                                <option>Classical</option>
+                                <option>Pop</option>
+                            </select> -->
+                        <!-- </div> -->
+
+                        <!-- Main header -->
+                        <h2>Artist?</h2>
+                        <div class="form-separator"></div>
+                        <p>If you're an artist, please add general information for your profile.</p>
+                        <div class="form-separator"></div>
+
+                        <!-- Form item: Artist Name -->
+                        <div class="form-input">
+                            <label for="form-artist-username">Username</label>
+                            <input 
+                                id="form-artist-username"
+                                name="form-artist-username"
+                                type="text" 
+                                placeholder="Enter username" />
+                        </div>
+
+                        <div class="form-input">
+                            <label for="form-artist-password">Password</label>
+                            <input 
+                                id="form-artist-password"
+                                name="form-artist-password"
+                                type="text" 
+                                placeholder="Enter password" />
+                        </div>
+
+                        <!-- Form item: Artist Profile Pic -->
+                        <div class="form-input">
+                            <label for="form-artist-img">Profile Picture Link</label>
+                            <input 
+                                id="form-artist-img"
+                                name="form-artist-name"
+                                type="text"
+                                placeholder="http: or https: starting..."/>
+                        </div>
+
+                        <!-- Form item: Artist Location -->
+                        <div class="form-input">
+                            <label for="form-artist-loc">Location</label>
+                            <input
+                                id="form-artist-loc"
+                                name="form-artist-loc"
+                                type="text"
+                                placeholder="Insert location"/>
+                        </div>
+
+                        <!-- Form item: Social Media Link(s): add JS functionality -->
+                        <div class="form-input">
+                            <div class="form-artist-handles-link"> 
+                                <ul>
+                                    <li>
+                                        <label for="form-handle-link-spotify">Spotify Handle</label>
+                                        <input 
+                                            id="form-handle-link-spotify"
+                                            name="form-handle-link-spotify"
+                                            type="text"
+                                            placeholder="Social link..."/>
+                                    </li>
+                                    <li>
+                                        <label for="form-handle-link-twitter">Twitter Handle</label>
+                                        <input 
+                                            id="form-handle-link-twitter"
+                                            name="form-handle-link-twitter"
+                                            type="text"
+                                            placeholder="Social link..."/>
+                                    </li>
+                                    <li>
+                                        <label for="form-handle-link-facebook">Facebook Handle</label>
+                                        <input 
+                                            id="form-handle-link-facebook"
+                                            name="form-handle-link-facebook"
+                                            type="text"
+                                            placeholder="Social link..."/>
+                                    </li>
+                                    <li>
+                                        <label for="form-handle-link-insta">Instagram Handle</label>
+                                        <input 
+                                            id="form-handle-link-insta"
+                                            name="form-handle-link-insta"
+                                            type="text"
+                                            placeholder="Social link..."/>
+                                    </li>
+                                </ul>
+                              
+                            </div>
+                        </div>
+
+                        <!-- Form item: Artist description -->
+                        <div class="form-input">
+                            <label for="artist-description">Description</label>
+
+                            <!-- note: If you put textareas on separate lines itll fill with default whitespace -->
+                            <textarea id="artist-description" name="artist-description" rows="4" cols="50" wrap="physical"></textarea>
+                        </div>
+
+                        <!-- Booking Information -->
+                        <div class="form-input">
+                            <label for="artist-booking-info">Booking Information</label>
+                            <input
+                                type="email"
+                                id="artist-booking-info"
+                                name="artist-booking-info" 
+                                placeholder="Input booking/management email..."
+                                />
+                        </div>
+
+                        <!-- Venue Information -->
+                        <p>Please add venue information for your profile!</p>
+                        <div class="venue-info">
+                            <ul id="venues">
+                                <li class="venue-card">
+                                    <div class="form-input">
+                                        <label for="venue-loc">Venue Location</label>
+                                        <input 
+                                            type="text"
+                                            id="venue-loc"
+                                            name="venue-loc"
+                                            placeholder="Venue Location"/>
+                                    </div>
+                                    <div class="form-input">
+                                        <label for="venue-date">Venue Date</label>
+                                        <input 
+                                            type="date"
+                                            id="venue-date"
+                                            name="venue-date"/>
+                                    </div>
+                                    <div class="form-input">
+                                        <label for="venue-time">Venue Time</label>
+                                        <input 
+                                            type="time"
+                                            id="venue-time"
+                                            name="venue-time"/>
+                                    </div>
+                                    <button class="delete-button" type="button">X</button>
+                                </li>
+                            </ul>
+                        </div>
+                        <button id="venue-submit">+</button>
+
+                        <div class="form-separator"></div>
+                        <div class="form-input">
+                            <button type="add-artist-button">Add Artist</button>
+                        </div>
+                        <div class="form-separator"></div>
+                    </form>
+                </div>
+
+
+                <div class="user-signup">
+                    <form>
+                        <h2>User?</h2>
+                        <div class="form-separator"></div>
+                        <p>If you're not an artist, please fill out some general information for your profile.</p>
+                        <div class="form-separator"></div>
+
+                        <div class="form-input">
+                            <label for="user-name">Username</label>
+                            <input 
+                                type="text"
+                                id="user-name"
+                                name="user-name" 
+                                placeholder="Name..."/>
+                        </div>
+
+                        <div class="form-input">
+                            <label for="form-user-password">Password</label>
+                            <input 
+                                id="form-user-password"
+                                name="form-user-password"
+                                type="text" 
+                                placeholder="Enter password" />
+                        </div>
+
+                        <!-- Form item: User Profile Pic -->
+                        <div class="form-input">
+                            <label for="form-user-img">Profile Picture Link</label>
+                            <input 
+                                id="form-user-img"
+                                name="form-user-name"
+                                type="text"
+                                placeholder="http: or https: starting..."/>
+                        </div>
+
+                        <!-- Form item: User Location -->
+                        <div class="form-input">
+                            <label for="form-user-loc">Location</label>
+                            <input
+                                id="form-user-loc"
+                                name="form-user-loc"
+                                type="text"
+                                placeholder="Insert location"/>
+                        </div>
+
+                        <div class="form-input">
+                            <label for="user-spotify-profile">Spotify Profile Link</label>
+                            <input 
+                                type="text"
+                                id="user-spotify-profile"
+                                name="user-spotify-profile"
+                                placeholder="Spotify profile..."/>
+                        </div>
+
+                        <!-- Form item: User description -->
+                        <div class="form-input">
+                            <label for="user-description">Description</label>
+                            <textarea id="user-description" name="user-description" rows="4" cols="50" wrap="physical"></textarea>
+                        </div>
+                        
+                        <div class="form-separator"></div>
+                        <div class="form-input">
+                            <button type="add-user-button">Add User</button>
+                        </div>
+                        <div class="form-separator"></div>
+                    </form>
+                </div>
+            </div>
+         </section>
+         <script src="js/main.js"></script>
+    </body>
+</html>
