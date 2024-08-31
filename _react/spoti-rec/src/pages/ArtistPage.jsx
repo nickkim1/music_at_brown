@@ -6,6 +6,7 @@ import { artists } from "../../artists.json";
 const ArtistPage = () => {
   const [artist, index]  = useLoaderData(); // See below
 
+
   return (
     <section className="artist" id="artist-listing">
       <main>

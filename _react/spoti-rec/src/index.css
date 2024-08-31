@@ -602,3 +602,39 @@ form {
     display: block;
     min-width: 500px;
 }
+
+/***********************************************************************/
+/* Dashboard styling */
+.dashboard-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.dashboard-buttons .edit {
+    background-color: blue;
+    padding: 10px;
+    font-weight: bold;
+    color: white;
+}
+
+.dashboard-buttons .delete {
+    background-color: red;
+    padding: 5px;
+    font-weight: bold;
+    color: white;
+}
+
+.dashboard-buttons button:hover {
+    border: 3px solid white;
+}
+
+.dashboard-fetch {
+    background-color: white; 
+    color: black;
+    padding: 10px;
+}
+
+.dashboard-fetch:hover {
+    border: 3px solid green;
+}

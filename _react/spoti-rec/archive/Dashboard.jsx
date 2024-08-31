@@ -1,136 +1,105 @@
-import { useState, useEffect, useRef} from "react";
-import FormCard from "../components/FormCard";
+import { useState, useEffect, useRef } from "react";
 
-const Signup = () => {
+const Dashboard = ({ artistUsername, artistPassword, userUsername, userPassword, isArtist }) => {
 
-    const [numVenueForms, setNumVenueForms] = useState([]);
-    const [venueLink, setVenueLink] = useState("");
-    const [venueLoc, setVenueLoc] = useState("");
-    const [venueDate, setVenueDate] = useState("");
-    const [venueTime, setVenueTime] = useState("");
+  // Get artist profile to populate initial state - draft of original useEffect hook
+  // useEffect(() => {
+  //   const getArtistProfile = async (e) => {
+  //       try{
+  //           let payload = isArtist ? { "artistUsername": artistUsername, "artistPassword": artistPassword} : {"userUsername": userUsername, "userPassword": userPassword}
+  //           await fetch("http://127.0.0.1:5000/dashboard", {
+  //             method: "GET",
+  //             body: JSON.stringify(payload)
+  //           })
+  //             .then((prom) => prom.json())
+  //             .then((data) => console.log(data));   
+  //       } catch (error) {
+  //           console.log("ERROR"); 
+  //       }
+  //   };
+  //   getArtistProfile();
+  // }, []); 
 
-    const addVenueForm = (e) => {
-        e.preventDefault();
-        // Just arbitrary placement to increase number of forms
-        setNumVenueForms((numVenueForms) => [...numVenueForms, []]);
+  const getArtistProfile = async (e) => {
+    try {
+      let payload = isArtist
+        ? { artistUsername: artistUsername, artistPassword: artistPassword }
+        : { userUsername: userUsername, userPassword: userPassword };
+      await fetch("http://127.0.0.1:5000/dashboard", {
+        method: "GET",
+        body: JSON.stringify(payload),
+      })
+        .then((prom) => prom.json())
+        .then((data) => console.log(data));
+    } catch (error) {
+      console.log("ERROR");
     }
+  };
 
-    const deleteVenueForm = (e) => {
-        e.preventDefault();
-        // Just arbitrary placemeent to decrease number of forms
-        setNumVenueForms((numVenueForms) => numVenueForms.slice(0, -1));
-        console.log(numVenueForms.length);
-    }
+  const [numVenueForms, setNumVenueForms] = useState([]);
+  const [venueLink, setVenueLink] = useState("");
+  const [venueLoc, setVenueLoc] = useState("");
+  const [venueDate, setVenueDate] = useState("");
+  const [venueTime, setVenueTime] = useState("");
 
-    const [artistUsername, setArtistUsername] = useState("");
-    const [artistPassword, setArtistPassword] = useState("");
-    const [artistName, setArtistName] = useState("");
-    const [artistProfileImg, setArtistProfileImg] = useState("");
-    const [artistLoc, setArtistLoc] = useState(""); 
-    const [artistSpotify, setArtistSpotify] = useState("");
-    const [artistTwitter, setArtistTwitter] = useState(""); 
-    const [artistFacebook, setArtistFacebook] = useState("");
-    const [artistInsta, setArtistInsta] = useState("");
-    const [artistDescription, setArtistDescription] = useState("");
-    const [bookingEmail, setBookingEmail] = useState("");
-    
-    const [userUsername, setUserUsername] = useState("");
-    const [userPassword, setUserPassword] = useState("");
-    const [userProfileImg, setUserProfileImg] = useState("");
-    const [userLoc, setUserLoc] = useState("");
-    const [userSpotify, setUserSpotify] = useState("");
-    const [userDescription, setUserDescription] = useState("");
+  const addVenueForm = (e) => {
+    e.preventDefault();
+    setNumVenueForms((numVenueForms) => [...numVenueForms, []]);
+  };
 
+  const deleteVenueForm = (e) => {
+    e.preventDefault();
+    setNumVenueForms((numVenueForms) => numVenueForms.slice(0, -1));
+    console.log(numVenueForms.length);
+  };
 
-    const onArtistSubmit = async (e) => {
-        e.preventDefault();
+  // Fields
+  const [artistName, setArtistName] = useState("");
+  const [artistProfileImg, setArtistProfileImg] = useState("");
+  const [artistLoc, setArtistLoc] = useState("");
+  const [artistSpotify, setArtistSpotify] = useState("");
+  const [artistTwitter, setArtistTwitter] = useState("");
+  const [artistFacebook, setArtistFacebook] = useState("");
+  const [artistInsta, setArtistInsta] = useState("");
+  const [artistDescription, setArtistDescription] = useState("");
+  const [bookingEmail, setBookingEmail] = useState("");
+  const [userProfileImg, setUserProfileImg] = useState("");
+  const [userLoc, setUserLoc] = useState("");
+  const [userSpotify, setUserSpotify] = useState("");
+  const [userDescription, setUserDescription] = useState("");
 
-        // This is so crappy workaround for getting venue data 
-        const locs = document.querySelectorAll("#artist-signup-form input");
-        const venueData = {}
-        locs.forEach(input => { 
-          let venueParts = input.id.split("-"); 
-          if (venueParts[0] == "venue") {
-            const venueNo = venueParts[venueParts.length - 1];
-            const fieldType = venueParts.slice(0, -1).join("-");
-            venueData[venueNo] = !venueData[venueNo] ? {} : venueData[venueNo]; // venue-loc, venue-date, etc.
-            venueData[venueNo][fieldType] = input.value;
-          }
-        });
+  const onArtistEdit = (e) => {
+    e.preventDefault();
+  };
 
-        //todo: create artist profile from above states & also the venue dat
-        const profile = {
-          "username": artistUsername, 
-          "password": artistPassword, 
-          "name": artistName, 
-          "img": artistProfileImg,
-          "location": artistLoc, 
-          "spotify": artistSpotify, 
-          "twitter": artistTwitter,
-          "facebook": artistFacebook, 
-          "insta": artistInsta,
-          "description": artistDescription, 
-          "booking": bookingEmail, 
-          "venues": venueData
-        }
+  const onArtistDelete = (e) => {
+    e.preventDefault();
+  };
 
-        console.log(profile);
-        console.log(JSON.stringify(profile));
+  const onUserEdit = (e) => {
+    e.preventDefault();
+    // no reason to iterate thru the form fields, can just use the exact states
+  };
 
-        try {
-          await fetch("http://127.0.0.1:5000/artistsignup", {
-            method: "POST", 
-            body: JSON.stringify(profile),
-            headers: {
-              "Content-Type": "application/json"
-            }
-          }).then((prom) => prom.json()).then((data) => console.log(data));
+  const onUserDelete = (e) => {
+    e.preventDefault();
+  };
 
-        } catch(error) {
-          console.log("Error", error); 
-        }
-
-    };
-
-
-    const onUserSubmit = (e) => {
-      e.preventDefault();
-      // no reason to iterate thru the form fields, can just use the exact states
-    };
-
-    return (
-      <>
-        <section>
-          <div className="form-wrapper">
+  return (
+    <>
+      <section>
+        <div className="form-wrapper">
+          {isArtist ? (
             <div className="artist-signup">
-              <form className="artist-signup-form" id="artist-signup-form" onSubmit={onArtistSubmit}>
+              <form
+                className="artist-signup-form"
+                id="artist-signup-form"
+                onSubmit={onArtistSubmit}
+              >
                 <h2>Artist?</h2>
                 <div className="form-separator"></div>
-                <p>
-                  If you're an artist, please add general information for your
-                  profile.
-                </p>
+                <p>Edit your profile!</p>
                 <div className="form-separator"></div>
-                <div className="form-input">
-                  <label htmlFor="form-artist-username">Username</label>
-                  <input
-                    id="form-artist-username"
-                    name="form-artist-username"
-                    type="text"
-                    placeholder="Enter username"
-                    onChange={(e) => setArtistUsername(e.target.value)}
-                  />
-                </div>
-                <div className="form-input">
-                  <label htmlFor="form-artist-password">Password</label>
-                  <input
-                    id="form-artist-password"
-                    name="form-artist-password"
-                    type="text"
-                    placeholder="Enter password"
-                    onChange={(e) => setArtistPassword(e.target.value)}
-                  />
-                </div>
                 <div className="form-input">
                   <label htmlFor="form-artist-name">Name</label>
                   <input
@@ -258,14 +227,20 @@ const Signup = () => {
                   +
                 </button>
                 <div className="form-separator"></div>
-                <div className="form-input">
-                  <button type="add-artist-button">Add Artist</button>
+                <div className="dashboard-buttons">
+                  <button className="edit" type="submit">Edit Artist</button>
+                  <button className="delete" type="submit">Delete Artist</button>
                 </div>
                 <div className="form-separator"></div>
               </form>
             </div>
+          ) : (
             <div className="user-signup">
-              <form className="user-signup-form" id="user-signup-form" onSubmit={onUserSubmit}>
+              <form
+                className="user-signup-form"
+                id="user-signup-form"
+                onSubmit={onUserSubmit}
+              >
                 <h2>User?</h2>
                 <div className="form-separator"></div>
                 <p>
@@ -342,18 +317,14 @@ const Signup = () => {
                     onChange={(e) => setUserDescription(e.target.value)}
                   ></textarea>
                 </div>
-
-                <div className="form-separator"></div>
-                <div className="form-input">
-                  <button type="add-user-button">Add User</button>
-                </div>
                 <div className="form-separator"></div>
               </form>
             </div>
-          </div>
-        </section>
-      </>
-    );
-}
+          )}
+        </div>
+      </section>
+    </>
+  );
+};
 
-export default Signup;
+export default Dashboard;

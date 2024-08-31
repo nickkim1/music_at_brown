@@ -2,9 +2,17 @@
 
 import { useEffect } from "react"; 
 
-const FormCard = ( { index, deleteVenueForm, setVenueLink, setVenueLoc, setVenueDate, setVenueTime}) => {
+const FormCard = ( { index, deleteVenueForm, setVenueLink, setVenueLoc, setVenueDate, setVenueTime, packet}) => {
 
-    // All these states & setters are really not that necessary but incl. in case I think of a better solution to what I'm trying to do
+    // Pre-populate
+    useEffect(() => {
+        if (packet) {
+          document.getElementById(`venue-loc-${index}`).value = packet["loc"] ? packet["loc"] : "";
+          document.getElementById(`venue-link-${index}`).value = packet["link"] ? packet["link"] : "";
+          document.getElementById(`venue-date-${index}`).value = packet["date"] ? packet["date"] : ""; 
+          document.getElementById(`venue-time-${index}`).value = packet["time"] ? packet["time"] : ""; 
+        }
+    }, []);
 
     return (
       <>

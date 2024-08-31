@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-const NavBar = () => {
+const NavBar = ( {isLoggedIn} ) => {
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -22,6 +22,18 @@ const NavBar = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  // Query the backend to see if the user or artist is logged in yet
+  const toggleLoggedIn = async(e) => {
+    e.preventDefault();
+    try{ 
+      await fetch("http://127.0.0.1:5000/login", {
+        method: "GET"
+      }).then((prom) => prom.json()).then((data) => console.log(data));
+    } catch(error) {
+      console.log("Error", error);
+    }
+  }
 
 
   return (
@@ -44,15 +56,29 @@ const NavBar = () => {
             <NavLink to="/artists" className="navbar-option">
               Artists
             </NavLink>
-            <NavLink to="/dashboard" className="navbar-option">
-              Dashboard
-            </NavLink>
-            <NavLink to="/login" className="navbar-option">
-              Login
-            </NavLink>
-            <NavLink to="/signup" className="navbar-option">
-              Signup
-            </NavLink>
+            {isLoggedIn ? (
+              <NavLink to="/dashboard" className="navbar-option">
+                Dashboard
+              </NavLink>
+            ) : (
+              <></>
+            )}
+            {isLoggedIn ? (
+              <NavLink to="/logout" className="navbar-option">
+                Logout
+              </NavLink>
+            ) : (
+              <NavLink to="/login" className="navbar-option">
+                Login
+              </NavLink>
+            )}
+            {isLoggedIn ? (
+              <></>
+            ) : (
+              <NavLink to="/signup" className="navbar-option">
+                Signup
+              </NavLink>
+            )}
           </div>
         </div>
       </nav>
@@ -69,21 +95,37 @@ const NavBar = () => {
             Artists
           </NavLink>
         </li>
-        <li>
-          <NavLink to="/dashboard" className="navbar-option">
-            Dashboard
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/login" className="navbar-option">
-            Login
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/signup" className="navbar-option">
-            Signup
-          </NavLink>
-        </li>
+        {isLoggedIn ? (
+          <li>
+            <NavLink to="/dashboard" className="navbar-option">
+              Dashboard
+            </NavLink>
+          </li>
+        ) : (
+          <></>
+        )}
+        {isLoggedIn ? (
+          <li>
+            <NavLink to="/logout" className="navbar-option">
+              Logout
+            </NavLink>
+          </li>
+        ) : (
+          <li>
+            <NavLink to="/login" className="navbar-option">
+              Login
+            </NavLink>
+          </li>
+        )}
+        {isLoggedIn ? (
+          <></>
+        ) : (
+          <li>
+            <NavLink to="/signup" className="navbar-option">
+              Signup
+            </NavLink>
+          </li>
+        )}
       </ul>
     </>
   );

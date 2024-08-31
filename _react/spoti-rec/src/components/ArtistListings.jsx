@@ -2,6 +2,7 @@ import { artists } from '../../artists.json';
 import ArtistCard from './ArtistCard';
 
 const ArtistListings = () => {
+
     return (
       <section className="browser">
         <div className="browser-banner">
