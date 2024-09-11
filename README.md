@@ -2,7 +2,7 @@
 
 ## Overview: 
 - This is a minimal application that uses the Spotify API to recommend 
-artists based on shared genre tastes to students at Brown (or any college). It is comprised of a React frontend + Flask backend + SQLite database. The Flask backend serves a REST API to the React frontend and there are several supported endpoints e.g. recommend that support the content-filtering recommendation mechanism. It is not deployed yet.
+artists based on shared genre tastes to students at Brown (or any college). It is comprised of a React frontend + Flask backend + SQLite database. The Flask backend serves a REST API to the React frontend and there are several supported endpoints e.g. recommend that support the content-filtering recommendation mechanism. 
 
 - Currently the recommender is a K-nearest neighbors algorithm. Artists from the database
 are compiled into an all-pairs matrix: their representative genres are one-hot-encoded and the cosine distance between each of the genre vectors between every pair of artists is inputted 
