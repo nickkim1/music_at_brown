@@ -99,6 +99,7 @@ class GenreRecommender():
         """
         distances, indices = model_knn.kneighbors(item.reshape(1,-1), n_neighbors=3)
         sorted_artist_indices = sorted(zip(distances, indices), key=lambda x:x[0]) # sort by distances in increasing order (most similar first)
+        
         # we can use our original table to retrieve the corresponding usernames
         res = []
         for entry in sorted_artist_indices:
@@ -106,6 +107,7 @@ class GenreRecommender():
                 username = self.collated_data.loc[idx, "username"]
                 if idx != item_idx: #don't recommend yourself
                     res.append(username)
+        
         return res
 
     def return_recs(self):

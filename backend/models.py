@@ -1,13 +1,16 @@
 # general purpose database functions & classes e.g. types, query-building helpers
 import sqlalchemy as sa
 from typing import Optional
+
 # provides support for building models
 import sqlalchemy.orm as so
 from app import db 
 from datetime import datetime, timezone
+
 # cryptographic hashes for secure passwords 
 from werkzeug.security import generate_password_hash, check_password_hash
-# login utils
+
+# login util imports
 from flask_login import UserMixin
 from app import login_manager
 import logging
@@ -37,6 +40,7 @@ class User(UserMixin, db.Model):
     - field types are assigned using Python type hints (str, etc.) wrapped in so.Mapped generic type that REQUIRE values unless Optional is specified 
     - https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-iv-database
     """
+
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     username: so.Mapped[str] = so.mapped_column(sa.String(64), index=True, unique=True)
     img: so.Mapped[str] = so.mapped_column(sa.String(140), index=True)
@@ -47,7 +51,7 @@ class User(UserMixin, db.Model):
 
     def __repr__(self):
         """
-        - tells Python how to print objects of this class (useful for debug)
+        Tells Python how to print objects of this class (useful for debug)
         """
         return '<User {}>'.format(self.username)
     
@@ -73,6 +77,7 @@ artist_venue_assoc = db.Table('artist_venue',
                          db.Column('venue_id', db.Integer, db.ForeignKey('venue.id'), primary_key=True))
     
 class Artist(UserMixin, db.Model): 
+
     """
     NOTES:
     - Representation for an artist
@@ -133,6 +138,7 @@ class Artist(UserMixin, db.Model):
         }
 
 class Venue(db.Model):
+
     """
     NOTES:
     - For mapping an artist back to their venues 
@@ -141,6 +147,7 @@ class Venue(db.Model):
     - We need to create an association table to represent this
     ->> reference: https://stackoverflow.com/questions/5756559/how-to-build-many-to-many-relations-using-sqlalchemy-a-good-example 
     """ 
+
     __tablename__ = 'venue'
 
     id: so.Mapped[int] = so.mapped_column(primary_key=True)

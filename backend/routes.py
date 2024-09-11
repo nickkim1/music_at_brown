@@ -7,6 +7,15 @@ from flask_login import login_user, current_user, logout_user, login_required
 import logging
 from recommend import GenreRecommender
 
+####################################################################################################################################
+# Other thoughts to implement:                                                                                                     #
+####################################################################################################################################
+# require users to login before they access anything?
+# workaround i did is to just render the dash conditionally based on loggedin status
+# more complex logic implemented with redirects: https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-v-user-logins 
+# @login_required # <<- I couldn't get cookies to work so this is going to have to go
+####################################################################################################################################
+
 logging.basicConfig(level=logging.DEBUG)
 
 @app.route('/')
@@ -166,6 +175,7 @@ def edit_artist():
             # - the best way to avoid this is to keep track of the id's you modify and delete and map those patterns 
             # in the frontend exactly, but that's just not here for now 
             # - this just assumes a) uq location and b) uq link 
+
             existing_venue = db.session.scalar(sa.select(Venue).where((Venue.loc==v['venue-loc']) & (Venue.link==v['venue-link'])))
             if existing_venue: 
                 existing_venue.date = v['venue-date']
@@ -197,6 +207,7 @@ def user_dashboard():
     data = request.get_json()
     username = data.get('username')
     user = db.session.scalar(sa.select(User).where(User.username==username)) # get the username and password of the artist 
+    
     if user: 
         return jsonify({"message": "Dashboard", "status": "Success", "profile": user.serialize()}), 200
 
@@ -208,8 +219,8 @@ def delete_user():
     user = db.session.scalar(sa.select(User).where(User.username==username))
     
     if not user:
-        print("Can't delete")
-    else:
+        print("CAN'T DELETE")
+    if user:
         db.session.delete(user)
         db.session.commit()
 
@@ -231,8 +242,6 @@ def user_signup():
     description = data.get('description')
     user = db.session.scalar(sa.select(User).where(User.username==username)) 
     
-    if user: 
-        print("USER ALREADY IN DB")
     if not user:
         print("USER NOT IN DB")
         user = User(username=username, img=img, spotify=spotify, location=location, description=description)
@@ -248,10 +257,8 @@ def edit_user():
     username = data.get('username')
     user = db.session.scalar(sa.select(User).where(User.username==username)) 
     
-    if not user:
-        print("Can't edit")
-    else:
-        print("can edit")
+    if user:
+        print("YES USER")
         user.img = data.get('img')
         user.location = data.get('loc')
         user.spotify = data.get('spotify')
@@ -291,11 +298,3 @@ def get_recommend():
     final_recs = gr.return_recs()
 
     return jsonify({"message": "Fetched recommendations successfully", "status": "Success", "payload": final_recs}), 200
-
-##############################################################################################################################
-# Other thoughts to implement: 
-#############################################################################################################################
-# require users to login before they access anything?
-# workaround i did is to just render the dash conditionally based on loggedin status
-# more complex logic could be implemented with redirects: https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-v-user-logins 
-# @login_required # <<- I couldn't get cookies to work so this is going to have to go

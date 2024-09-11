@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start-api": "cd server && /Users/nicolaskim/Desktop/projects/react/spoti-rec/venv/bin/flask run --no-debugger",
+    "start-api": "cd backend && /Users/nicolaskim/Desktop/projects/react/spoti-rec/venv/bin/flask run --no-debugger",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
